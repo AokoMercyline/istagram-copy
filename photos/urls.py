@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^image/$', views.add_image, name='upload_image'),
     url(r'^profile/$', views.profile_info, name='profile'),
+    url(r'^update/$', views.profile_update, name='update'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
