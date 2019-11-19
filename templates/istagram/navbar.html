@@ -1,6 +1,6 @@
 <!-- Navbar -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
-        
+<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar bg-warning">
+        {% if user.is_authenticated %}
     
             <!-- Brand -->
             <a class="navbar-brand pt-0 waves-effect" href="/">
@@ -31,7 +31,7 @@
                         </li>
                         <ul class="navbar-nav nav-flex-icons">
                                 <li class="nav-item">
-                                    <form action="">
+                                    <form action="{% url 'search_results' %}">
                                             <div class="form-group">
                                                     <input type="text" name="username" class="">
                                                     <span><input type="submit" value="Search" class="btn-sm"></span>
@@ -54,26 +54,29 @@
                 <!-- Right -->
                 <ul class="navbar-nav nav-flex-icons">
                      
-                    <!-- <li class="nav-item">
-                        <a href="https://www.facebook.com/mdbootstrap" class="nav-link waves-effect" target="_blank">
-                            <i class="fab fa-facebook-f"></i>
+                    <li class="nav-item">
+                        <a href="{%url 'profile'%}" class="nav-link waves-effect">
+                                <!-- <i class="fa fa-user-circle fa-3x"></i> -->
+                          <img src="{{ user.profile.photo.url}}" alt="" style="width:50px; height:50px; border-radius:50px"> 
+                           
+                           <span class="ml-3">{{user.username}}</span> 
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a href="https://twitter.com/MDBootstrap" class="nav-link waves-effect" target="_blank">
                             <i class="fab fa-twitter"></i>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded waves-effect"
-                            target="_blank">
-                            <i class="fa fa-github mr-2"></i>MDB GitHub
-                        </a>
                     </li> -->
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link border border-light rounded waves-effect">
+                                <!-- <i class="fa fa-sign-out mr-2 fa-3x text-dark"></i> -->
+                              Logout 
+                        </a>
+                    </li>  
                 </ul>
                 
             </div>
     
-        
+        {% endif %}
     </nav>
     <!-- Navbar -->
