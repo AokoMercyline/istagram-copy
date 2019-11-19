@@ -5,7 +5,7 @@ from tinymce.models import HTMLField
 
 class Profile(models.Model):
     photo = models.ImageField(upload_to='images', default='profile.png')
-    bio = HTMLField()
+    bio = HTMLField(blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
 
     def __str__(self):
@@ -26,6 +26,9 @@ class Profile(models.Model):
     def get_all_profiles(cls):
         profile = Profile.objects.all()
         return profile
+    @classmethod
+    def search_user(cls,user):
+        return cls.objects.filter(user__username__icontains=user).all()
 
 
 class Image(models.Model):
