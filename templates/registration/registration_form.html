@@ -19,7 +19,7 @@
                 </div>
                 <span class="text-center">Sign up to see photos and videos from your friends.</span>
             <div class="form-section" id="register">
-                <form method="post" action="/accounts/register">
+                <form method="post" action="/accounts/register/">
                     {% csrf_token %}
                     {% bootstrap_form form %}
                     <div class="form-group">
