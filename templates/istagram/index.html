@@ -1,31 +1,57 @@
 {%extends 'istagram/base.html'%}
 {% load staticfiles%}
 {% load bootstrap4 %}
+
 {% block content %}
 {{block.super}}
 <div class="container-fluid" style="margin-top:70px">
-        <h1 id="mainheading" style="text-align:center; color: black; padding-bottom: 20px;" class="display-3">Welcome</h1>
+        
+           
       <div class="row">
           {% for image in posts %}
           <div class="col-xs-6 col-sm-6 col-md-8 col-lg-8 mx-auto mb-3">
               <div class="card">
-                  <div class="card-header"><img src=" /static/images/avater.jpg " alt=""><i class="fa fa-user-circle fa-4x"></i></div>
+                  <div class="card-header ">
+                      {% if image %}
+                      <img src="{{image.user.profile.photo.url}} " alt="" style="width:50px; height:50px; border-radius:50px;z-index:3;"><span class="ml-3">{{image.profile.username}}</span>
+                        {% else %}
+                      <i class="fa fa-user-circle fa-4x"></i>
+                        {% endif%}
+                    </div>
                   <div class="card-body">
                         <img src="{{ image.image.url}}" alt="" class="img-responsive img-fluid">
                   </div>
                   <div class="card-text">
                       <div class="icons d-flex text-center">
                           <div></div>
-                          <a href=""><i class="fa fa-heart fa-2x text-danger mr-5"></i></a>
-                        
-                            <i class="fa fa-comment fa-2x"></i>
+                          <a href=" {% url 'like' image_id=image.id %}"><i class="fa fa-heart fa-2x text-danger mr-5"></i></a>
+                            
+                            <a href=" {% url 'comment' image_id=image.id %}"><i class="fa fa-comment fa-2x"></i></a>
                             
                       </div>
-                      <h3 class="mb-3">No: likes</h3>
-                      <div class="caption">Caption here</div>
+                      <h3 class="mb-3">{{likes|length}} likes</h3>
+                      <div class="caption">
+                            <h5><strong>{{image.profile.username}}</strong> {{image.caption}}</h5>
+                            {% if comment %}
+                            <p class=""> {{image.comment.count}} comments </p>
+                            {% else %}
+                            <p class="">0 comments </p>
+                            {% endif %}
+                      </div>
+                      
                   </div>
                   <div class="card-footer">
                       <h4>Comments:</h4>
+                      <div class="card-body ">
+                            {% for comment in comments %}
+                            {% if comment.image_id == image.id%}
+                            <h5><strong>{{comment.user}}</strong> {{comment.comment}}</h5>
+                            <p>{{comment.posted | timesince}}</p>
+                            <hr>
+    
+                            {% endif %}
+                            {% endfor %}
+                        </div>
                   </div>
               </div>
             
