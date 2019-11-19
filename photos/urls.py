@@ -8,6 +8,11 @@ urlpatterns = [
     url(r'^image/$', views.add_image, name='upload_image'),
     url(r'^profile/$', views.profile_info, name='profile'),
     url(r'^update/$', views.profile_update, name='update'),
+    url(r'^comment/(?P<image_id>\d+)', views.comment, name='comment'),
+    url(r'^like/(?P<image_id>\d+)', views.like, name='like'),
+    url(r'^search/', views.search_results, name = 'search_results'),
+    url(r'^follow/(?P<user_id>\d+)', views.follow, name = 'follow'),
+    url(r'^unfollow/(?P<user_id>\d+)', views.unfollow, name='unfollow'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
