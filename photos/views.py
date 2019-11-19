@@ -46,13 +46,13 @@ def add_image(request):
 @login_required(login_url='/accounts/login/')                
 def profile_info(request):
         current_user = request.user
-        follow = len(Follow.objects.followers(users))
-        following = len(Follow.objects.following(users))
-        people_following = Follow.objects.following(request.user)
+        # follow = len(Follow.objects.followers(users))
+        # following = len(Follow.objects.following(users))
+        # people_following = Follow.objects.following(request.user)
         profile = Profile.objects.filter(user=current_user).first()
         posts = request.user.image_set.all()
        
-        return render(request, 'istagram/profile.html', {"images": posts, "profile": profile, 'follow':follow, 'following':following,'people_following':people_following})
+        return render(request, 'istagram/profile.html', {"images": posts, "profile": profile})
 @login_required(login_url='/accounts/login/') 
 def profile_update(request):
          current_user = request.user
@@ -85,7 +85,7 @@ def comment(request,image_id):
                 return redirect('index')
         else:
                 form = CommentForm()
-        return render(request, 'istagram/comment.html',{"comments":comments})
+        return render(request, 'istagram/comment.html',{"comments":comments, "form":form})
 
 @login_required(login_url='/accounts/login/') 
 def like(request, image_id):
@@ -114,10 +114,10 @@ def search_results(request):
         searched_users = User.objects.filter(username__icontains = search_term)
         message = f"{search_term}"
         profile_pic = User.objects.all()
-        return render(request, 'search.html', {'message':message, 'users':searched_users, 'profile_pic':profile_pic})
+        return render(request, 'istagram/search.html', {'message':message, 'results':searched_users, 'profile_pic':profile_pic})
     else:
         message = "You haven't searched for any term"
-        return render(request, 'search.html', {'message':message})
+        return render(request, 'istagram/search.html', {'message':message})
 
 def follow(request, user_id):
     other_user = User.objects.get(id = user_id)
