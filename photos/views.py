@@ -11,22 +11,22 @@ def index(request):
     posts = Image.get_all_images()
     profile = Profile.get_all_profiles()
     comments=Comments.objects.all()
-    current_user = request.user
-    if request.method == 'POST':
-        form = CommentForm(request.POST, request.FILES)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = current_user
-            comment.save()
-        return redirect('index')
-    else:
-        form=CommentForm()
-        context =  {
+#     current_user = request.user
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             comment = form.save(commit=False)
+#             comment.user = current_user
+#             comment.save()
+#         return redirect('index')
+#     else:
+        # form=CommentForm()
+    context =  {
         "profile": profile,
-        "form": form,
+        # "form": form,
         "posts":posts ,
-        "comments":comments,
-    }
+        # "comments":comments,
+        }
     return render(request, 'istagram/index.html', context)
     
 @login_required(login_url='/accounts/login/')
@@ -71,7 +71,7 @@ def profile_update(request):
 def comment(request,image_id):
         current_user=request.user
         image = Image.objects.get(id=image_id)
-        profile_owner = User.objects.get(username=current_user)
+        profile_owner = User.objects.get(username=current_user.username)
         comments = Comments.objects.all()
         if request.method == 'POST':
                 form = CommentForm(request.POST, request.FILES)
@@ -82,7 +82,7 @@ def comment(request,image_id):
                         comment.save()
             
                        
-                return redirect(index)
+                return redirect('index')
         else:
                 form = CommentForm()
         return render(request, 'istagram/comment.html',{"comments":comments})
