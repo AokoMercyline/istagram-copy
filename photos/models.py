@@ -2,6 +2,8 @@ from django.db import models
 import datetime as dt
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
+from vote.models import VoteModel
+from vote.managers import VotableManager
 
 class Profile(models.Model):
     photo = models.ImageField(upload_to='images', default='profile.png')
@@ -99,9 +101,14 @@ class Comments(models.Model):
     def delete_comment(self):
         self.delete()
 
+    # @classmethod
+    # def get_comments_by_images(self):
+    #     comments = Image.objects.filter(image_id = id )
+    #     return comments
+
     @classmethod
-    def get_comments_by_images(self):
-        comments = Image.objects.filter(image_id = id )
+    def get_comments(cls,id):
+        comments = cls.objects.filter(image__id=id)
         return comments
 
 

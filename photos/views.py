@@ -4,20 +4,19 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Image, Profile,Comments,Likes
- 
+from vote.managers import VotableManager
+
+votes=VotableManager()
 
 @login_required(login_url='/accounts/login/')
 def index(request):
+    current_user = request.user
     posts = Image.get_all_images()
+    comments = Comments.objects.all()
     profile = Profile.get_all_profiles()
-     
-    context =  {
-        "profile": profile,
-       
-        "posts":posts ,
+    likes = Likes.objects.all()
     
-        }
-    return render(request, 'istagram/index.html', context)
+    return render(request, 'istagram/index.html', locals())
     
 @login_required(login_url='/accounts/login/')
 def add_image(request):
@@ -63,11 +62,12 @@ def comment(request,image_id):
         image = Image.objects.get(id=image_id)
         profile_owner = User.objects.get(username=current_user.username)
         comments = Comments.objects.all()
+        
         if request.method == 'POST':
                 form = CommentForm(request.POST, request.FILES)
                 if form.is_valid():
                         comment = form.save(commit=False)
-                        comment.image = Image.objects.get(id=image_id)
+                        comment.image = image
                         comment.user = request.user
                         comment.save()
             
@@ -120,3 +120,5 @@ def unfollow(request, user_id):
     follow = Follow.objects.remove_follower(request.user, other_user)
 
     return redirect('index')
+
+# def like_images(request, id):
