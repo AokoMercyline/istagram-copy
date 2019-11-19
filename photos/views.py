@@ -10,22 +10,12 @@ from .models import Image, Profile,Comments,Likes
 def index(request):
     posts = Image.get_all_images()
     profile = Profile.get_all_profiles()
-    comments=Comments.objects.all()
-#     current_user = request.user
-#     if request.method == 'POST':
-#         form = CommentForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             comment.user = current_user
-#             comment.save()
-#         return redirect('index')
-#     else:
-        # form=CommentForm()
+     
     context =  {
         "profile": profile,
-        # "form": form,
+       
         "posts":posts ,
-        # "comments":comments,
+    
         }
     return render(request, 'istagram/index.html', context)
     
@@ -77,15 +67,15 @@ def comment(request,image_id):
                 form = CommentForm(request.POST, request.FILES)
                 if form.is_valid():
                         comment = form.save(commit=False)
-                        comment.image = image
-                        comment.comment_owner = current_user
+                        comment.image = Image.objects.get(id=image_id)
+                        comment.user = request.user
                         comment.save()
             
                        
                 return redirect('index')
         else:
                 form = CommentForm()
-        return render(request, 'istagram/comment.html',{"comments":comments, "form":form})
+        return render(request, 'istagram/comment.html',locals())
 
 @login_required(login_url='/accounts/login/') 
 def like(request, image_id):
