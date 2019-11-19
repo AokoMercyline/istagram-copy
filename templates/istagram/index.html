@@ -4,7 +4,7 @@
 
 {% block content %}
 {{block.super}}
-<div class="container-fluid" style="margin-top:70px">
+<div class="container-fluid" style="margin-top:8rem">
         
            
       <div class="row">
@@ -13,13 +13,13 @@
               <div class="card">
                   <div class="card-header ">
                       {% if image %}
-                      <img src="{{image.user.profile.photo.url}} " alt="" style="width:50px; height:50px; border-radius:50px;z-index:3;"><span class="ml-3">{{image.profile.username}}</span>
+                      <img src="{{image.user.photo.url}} " alt="" style="width:50px; height:50px; border-radius:50px;z-index:3;"><span class="ml-3">{{image.profile.username}}</span>
                         {% else %}
                       <i class="fa fa-user-circle fa-4x"></i>
                         {% endif%}
                     </div>
                   <div class="card-body">
-                        <img src="{{ image.image.url}}" alt="" class="img-responsive img-fluid">
+                        <img src="{{ image.image.url}}" alt="" class="img-responsive img-fluid"  data-toggle="modal" data-target=#{{image.id}}>
                   </div>
                   <div class="card-text">
                       <div class="icons d-flex text-center">
@@ -56,9 +56,36 @@
               </div>
             
           </div>
-          {% endfor %}
+           <!-- Modal -->
+  <div class="modal fade " id="{{image.id}}" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          
+          <h4 class="modal-title"><img src="{{image.user.photo.url}} " alt="" style="width:50px; height:50px; border-radius:50px;z-index:3;"><span class="ml-3">{{image.profile.username}}</span></h4>
+        </div>
+        <div class="modal-body">
+            <img src="{{ image.image.url}}" alt="" class="img-responsive img-fluid">
+            <h5><strong>{{image.profile.username}}</strong> {{image.caption}}</h5>
+            <div class="card-body ">
+                {% for comment in comments %}
+                {% if comment.image_id == image.id%}
+                <h5><strong>{{comment.user}}</strong> {{comment.comment}}</h5>
+                <p>{{comment.posted | timesince}}</p>
+                <hr>
+
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+          
       </div>
-    </body>
-    </html>
 {% endblock %}
