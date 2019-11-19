@@ -7,7 +7,7 @@
 This is an app that allows users to like post and comment on other people posts
 
 ## Project live site
-  This is the live .[ Click for the demo]()
+  This is the live .[ Click for the demo](https://istagramclone001.herokuapp.com/)
  ![Image](static/images/ista.png)
 ## Features
 * User can log in to application and view other peoples posts.
