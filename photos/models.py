@@ -41,6 +41,7 @@ class Image(models.Model):
     profile = models.ForeignKey(User, on_delete=models.CASCADE)
     
     
+    
     def save_image(self):
         self.save()
 
