@@ -14,7 +14,7 @@ def index(request):
     posts = Image.get_all_images()
     comments = Comments.objects.all()
     profile = Profile.get_all_profiles()
-    likes = Likes.objects.all()
+#     likes = Likes.objects.all()
     
     return render(request, 'istagram/index.html', locals())
     
@@ -77,14 +77,14 @@ def comment(request,image_id):
                 form = CommentForm()
         return render(request, 'istagram/comment.html',locals())
 
-@login_required(login_url='/accounts/login/') 
-def like(request, image_id):
-    current_user = request.user
-    image=Image.objects.get(id=image_id)
-    new_like,created= Likes.objects.get_or_create(user=current_user, image=image)
-    new_like.save()
+# @login_required(login_url='/accounts/login/') 
+# def like(request, image_id):
+#     current_user = request.user
+#     image=Image.objects.get(id=image_id)
+#     new_like,created= Likes.objects.get_or_create(user=current_user, image=image)
+#     new_like.save()
 
-    return redirect('index')
+#     return redirect('index')
 
 # def like(request,image_id):
 #   image = Image.objects.get(pk = image_id)
@@ -121,4 +121,15 @@ def unfollow(request, user_id):
 
     return redirect('index')
 
-# def like_images(request, id):
+@login_required(login_url='/accounts/login/')
+def like_images(request, id):
+        image = Image.get_one_image(id)
+        user = request.user
+        user_id = user.id
+
+        if user.is_authenticated:
+                uplike = image.votes.up(user_id)
+                image.likes = image.votes.count()
+                image.save()
+
+                return redirect('index')
