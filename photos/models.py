@@ -3,7 +3,7 @@ import datetime as dt
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
 from vote.models import VoteModel
-from vote.managers import VotableManager
+
 
 class Profile(models.Model):
     photo = models.ImageField(upload_to='images', default='profile.png')
