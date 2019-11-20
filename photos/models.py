@@ -33,13 +33,13 @@ class Profile(models.Model):
         return cls.objects.filter(user__username__icontains=user).all()
 
 
-class Image(models.Model):
+class Image(VoteModel,models.Model):
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to='images/', default='text.png')
     caption = models.CharField(max_length=200)
     date_uploaded = models.DateTimeField(auto_now_add=True)
     profile = models.ForeignKey(User, on_delete=models.CASCADE)
-    
+    like_add = models.PositiveIntegerField(default=0)
     
     
     def save_image(self):
@@ -68,12 +68,18 @@ class Image(models.Model):
     def search_by_profile(cls,name):
         profile = Profile.objects.filter(user__name__icontains = name)
 
+    @classmethod
+    def get_one_image(cls,id):
+        image = cls.objects.get(pk=id)
+        return image
+
+
 
     def __str__(self):
         return self.name
 
     class Meta:
-        ordering = ['date_uploaded']
+        ordering = ['-date_uploaded']
         
 
 class Likes(models.Model):
