@@ -14,7 +14,7 @@ def index(request):
     posts = Image.get_all_images()
     comments = Comments.objects.all()
     profile = Profile.get_all_profiles()
-#     likes = Likes.objects.all()
+    
     
     return render(request, 'istagram/index.html', locals())
     
@@ -121,7 +121,7 @@ def unfollow(request, user_id):
 
     return redirect('index')
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/register/')
 def like_images(request, id):
         image = Image.get_one_image(id)
         user = request.user
@@ -129,7 +129,7 @@ def like_images(request, id):
 
         if user.is_authenticated:
                 uplike = image.votes.up(user_id)
-                image.likes = image.votes.count()
+                image.like_add = image.votes.count()
                 image.save()
 
-                return redirect('index')
+        return redirect('index')
