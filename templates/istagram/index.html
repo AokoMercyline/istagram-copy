@@ -29,13 +29,13 @@
                             <a href=" {% url 'comment' image_id=image.id %}"><i class="fa fa-comment fa-2x"></i></a>
                             
                       </div>
-                      <h3 class="mb-3">{{likes|length}} likes</h3>
+                      <h3 class="mb-3">{{like_add|length}} likes</h3>
                       <div class="caption">
                             <h5><strong>{{image.profile.username}}</strong> {{image.caption}}</h5>
                             {% if comment %}
-                            <p class=""> {{image.comment|length}} comments </p>
+                            <p class=""> {{user.profile.comments|length}} comments </p>
                             {% else %}
-                            <p class="">0 comments </p>
+                            <!-- <p class="">0 comments </p> -->
                             {% endif %}
                       </div>
                       
@@ -43,9 +43,10 @@
                   <div class="card-footer">
                       <h4>Comments:<span><a href="{% url 'comment' image_id=image.id %}" class="btn btn-sm btn-success" style="float:right">Add Comment</a></span></h4>
                       <div class="card-body ">
+                            <!-- <p class=""> {{comments|length}} comments </p> -->
                             {% for comment in comments %}
                             {% if comment.image_id == image.id%}
-                            <p class=""> {{comment|length}} comments </p>
+                           
                             <h5><strong>{{comment.user}}</strong> {{comment.comment}}</h5>
                             <p>{{comment.posted | timesince}}</p>
                             <hr>
