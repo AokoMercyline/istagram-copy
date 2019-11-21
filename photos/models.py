@@ -45,7 +45,7 @@ class Image(VoteModel,models.Model):
     def save_image(self):
         self.save()
 
-    def delete_image():
+    def delete_image(self):
         self.delete()
 
     @classmethod
@@ -102,7 +102,7 @@ class Comments(models.Model):
     image = models.ForeignKey(Image, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def delete_save(self):
+    def save_comment(self):
         self.save()
 
     def delete_comment(self):
