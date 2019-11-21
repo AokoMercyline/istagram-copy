@@ -29,13 +29,13 @@
                             <a href=" {% url 'comment' image_id=image.id %}"><i class="fa fa-comment fa-2x"></i></a>
                             
                       </div>
-                      <h3 class="mb-3">{{like_add|length}} likes</h3>
+                      <!-- <h3 class="mb-3">{{like_add|length}} likes</h3> -->
                       <div class="caption">
                             <h5><strong>{{image.profile.username}}</strong> {{image.caption}}</h5>
-                            {% if comment %}
-                            <p class=""> {{user.profile.comments|length}} comments </p>
+                            {% if image.comments_set.all %}
+                            <p class=""> {{image.comments_set.all|length}} comments </p>
                             {% else %}
-                            <!-- <p class="">0 comments </p> -->
+                            <p class="">0 comments </p>
                             {% endif %}
                       </div>
                       
