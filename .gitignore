@@ -1,4 +1,4 @@
-virtual/
+newenv/
 .*pyc
 vscode/
 _pycache_
