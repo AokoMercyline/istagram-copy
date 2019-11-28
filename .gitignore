@@ -1,5 +1,5 @@
 newenv/
 .*pyc
-vscode/
-_pycache_
+.vscode
+__pycache__
 .env
